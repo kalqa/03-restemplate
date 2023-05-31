@@ -1,5 +1,7 @@
 package com.example.restemplate;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -17,9 +19,8 @@ public class RestemplateApplication {
     }
 
     @EventListener(ApplicationStartedEvent.class)
-    public void makeRequestToShawnMendesEndpoint(){
-        String response = shawnMendesClient.makeShawnMendesRequest("shawnmendes", 5);
+    public void makeRequestToShawnMendesEndpoint() throws JsonProcessingException {
+        ShawnMendesResponse response = shawnMendesClient.makeShawnMendesRequest("shawnmendes", 3);
         System.out.println(response);
-
     }
 }
