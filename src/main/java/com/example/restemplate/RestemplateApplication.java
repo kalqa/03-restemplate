@@ -1,7 +1,7 @@
 package com.example.restemplate;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import java.util.List;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -20,7 +20,15 @@ public class RestemplateApplication {
 
     @EventListener(ApplicationStartedEvent.class)
     public void makeRequestToShawnMendesEndpoint() throws JsonProcessingException {
-        ShawnMendesResponse response = shawnMendesClient.makeShawnMendesRequest("shawnmendes", 3);
-        System.out.println(response);
+        String json = shawnMendesClient.makeShawnMendesRequest("shawnmendes", 3);
+        if (json != null) {
+            ShawnMendesResponse shawnMendesResponse = mapJsonToShawnMendesResponse(json);
+            System.out.println(shawnMendesResponse);
+        }
+    }
+
+    private ShawnMendesResponse mapJsonToShawnMendesResponse(String json) throws JsonProcessingException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        return objectMapper.readValue(json, ShawnMendesResponse.class);
     }
 }
