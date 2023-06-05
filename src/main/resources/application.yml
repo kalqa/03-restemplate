@@ -1,3 +1,12 @@
-shawnmendes:
+itunes:
   service:
-    url: https://itunes.apple.com
+    url: itunes.apple.com
+    port: 443
+
+sample-shawn-mendes-server:
+  service:
+    url: localhost
+    port: 8080
+
+server:
+  port: 8081

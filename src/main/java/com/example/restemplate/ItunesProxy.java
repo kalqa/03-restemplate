@@ -1,7 +1,6 @@
 package com.example.restemplate;
 
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpMethod;
@@ -10,27 +9,33 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestClientResponseException;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponentsBuilder;
 
 
 @Component
-public class ShawnMendesProxy {
+public class ItunesProxy {
 
     @Autowired
     RestTemplate restTemplate;
 
-    @Value("${shawnmendes.service.url}")
+    @Value("${itunes.service.url}")
     String url;
 
-    public String makeShawnMendesRequest(String term, Integer limit) throws JsonProcessingException {
-        // GET https://itunes.apple.com/search?term=shawnmendes&limit=1
-        String uri = url + "/searchch?term=" + term + "&limit=" + limit;
-        return makeRequest(uri);
-    }
+    @Value("${itunes.service.port}")
+    int port;
 
-    private String makeRequest(String uri) {
+    public String makeRequest(String term, Integer limit) {
+        UriComponentsBuilder builder = UriComponentsBuilder
+                .newInstance()
+                .scheme("https")
+                .host(url)
+                .port(port)
+                .path("/search")
+                .queryParam("term", term)
+                .queryParam("limit", limit);
         try {
             ResponseEntity<String> response = restTemplate.exchange(
-                    uri,
+                    builder.build().toUri(),
                     HttpMethod.GET,
                     null,
                     String.class

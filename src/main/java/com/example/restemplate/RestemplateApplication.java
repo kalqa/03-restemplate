@@ -12,23 +12,37 @@ import org.springframework.context.event.EventListener;
 public class RestemplateApplication {
 
     @Autowired
-    ShawnMendesProxy shawnMendesClient;
+    ItunesProxy shawnMendesClient;
+
+    @Autowired
+    SampleShawnMendesServerProxy sampleShawnMendesServerProxy;
 
     public static void main(String[] args) {
         SpringApplication.run(RestemplateApplication.class, args);
     }
 
     @EventListener(ApplicationStartedEvent.class)
-    public void makeRequestToShawnMendesEndpoint() throws JsonProcessingException {
-        String json = shawnMendesClient.makeShawnMendesRequest("shawnmendes", 3);
+    public void run() throws JsonProcessingException {
+        String json = shawnMendesClient.makeRequest("shawnmendes", 3);
         if (json != null) {
             ShawnMendesResponse shawnMendesResponse = mapJsonToShawnMendesResponse(json);
             System.out.println(shawnMendesResponse);
+        }
+
+        String jsonSampleShawnMendesServer = sampleShawnMendesServerProxy.makeRequest();
+        if (jsonSampleShawnMendesServer != null) {
+            SampleServerShawnMendesResponse sampleShawnMendesResponse = mapJsonToSampleShawnMendesResponse(jsonSampleShawnMendesServer);
+            System.out.println(sampleShawnMendesResponse);
         }
     }
 
     private ShawnMendesResponse mapJsonToShawnMendesResponse(String json) throws JsonProcessingException {
         ObjectMapper objectMapper = new ObjectMapper();
         return objectMapper.readValue(json, ShawnMendesResponse.class);
+    }
+
+    private SampleServerShawnMendesResponse mapJsonToSampleShawnMendesResponse(String json) throws JsonProcessingException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        return objectMapper.readValue(json, SampleServerShawnMendesResponse.class);
     }
 }
