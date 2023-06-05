@@ -26,7 +26,7 @@ public class SampleShawnMendesServerProxy {
     @Value("${sample-shawn-mendes-server.service.port}")
     int port;
 
-    public String makeRequest() {
+    public String makePostRequest() {
         UriComponentsBuilder builder = UriComponentsBuilder
                 .newInstance()
                 .scheme("http")
@@ -35,12 +35,37 @@ public class SampleShawnMendesServerProxy {
                 .path("/shawn/songs");
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.add("requestId", "asdasdvdscsvdfvdf");
-        HttpEntity<HttpHeaders> httpEntity = new HttpEntity<>(httpHeaders);
+        SampleShawnMendesRequest requestBody = new SampleShawnMendesRequest("nanana");
+        HttpEntity<SampleShawnMendesRequest> httpEntity = new HttpEntity<>(requestBody, httpHeaders);
+        try {
+            ResponseEntity<String> response = restTemplate.exchange(
+                    builder.build().toUri(),
+                    HttpMethod.POST,
+                    httpEntity,
+                    String.class
+            );
+            return response.getBody();
+        } catch (RestClientResponseException exception) {
+            System.out.println(exception.getStatusText() + " " + exception.getStatusCode().value());
+        } catch (RestClientException exception) {
+            System.out.println(exception.getMessage());
+        }
+        return null;
+    }
+
+
+    public String makeGetRequest() {
+        UriComponentsBuilder builder = UriComponentsBuilder
+                .newInstance()
+                .scheme("http")
+                .host(url)
+                .port(port)
+                .path("/shawn/songs");
         try {
             ResponseEntity<String> response = restTemplate.exchange(
                     builder.build().toUri(),
                     HttpMethod.GET,
-                    httpEntity,
+                    null,
                     String.class
             );
             return response.getBody();
