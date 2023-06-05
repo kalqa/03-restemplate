@@ -23,11 +23,11 @@ public class RestemplateApplication {
 
     @EventListener(ApplicationStartedEvent.class)
     public void run() throws JsonProcessingException {
-        String json = shawnMendesClient.makeRequest("shawnmendes", 3);
-        if (json != null) {
-            ShawnMendesResponse shawnMendesResponse = mapJsonToShawnMendesResponse(json);
-            System.out.println(shawnMendesResponse);
-        }
+//        String json = shawnMendesClient.makeRequest("shawnmendes", 3);
+//        if (json != null) {
+//            ShawnMendesResponse shawnMendesResponse = mapJsonToShawnMendesResponse(json);
+//            System.out.println(shawnMendesResponse);
+//        }
 
         String jsonSampleShawnMendesServer = sampleShawnMendesServerProxy.makeRequest();
         if (jsonSampleShawnMendesServer != null) {
