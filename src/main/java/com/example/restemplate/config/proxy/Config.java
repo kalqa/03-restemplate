@@ -1,4 +1,4 @@
-package com.example.restemplate;
+package com.example.restemplate.config.proxy;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

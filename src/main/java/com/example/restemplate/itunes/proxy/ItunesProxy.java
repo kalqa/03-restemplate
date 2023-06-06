@@ -1,4 +1,4 @@
-package com.example.restemplate;
+package com.example.restemplate.itunes.proxy;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +24,7 @@ public class ItunesProxy {
     @Value("${itunes.service.port}")
     int port;
 
-    public String makeRequest(String term, Integer limit) {
+    public String makeGetRequest(String term, Integer limit) {
         UriComponentsBuilder builder = UriComponentsBuilder
                 .newInstance()
                 .scheme("https")

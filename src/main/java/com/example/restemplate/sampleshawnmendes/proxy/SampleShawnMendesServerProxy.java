@@ -1,4 +1,4 @@
-package com.example.restemplate;
+package com.example.restemplate.sampleshawnmendes.proxy;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
